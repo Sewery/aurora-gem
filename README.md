@@ -23,4 +23,4 @@ echo "Good to go :tada:"
 ```
 # Contributors
 Seweryn Tasior (https://github.com/Sewery)
-Wojtek Pawlina (https://github.com/Wpawlina/Wpawlina)
+Wojtek Pawlina (https://github.com/Wpawlina)

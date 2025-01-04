@@ -1,0 +1,29 @@
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my#root#password
+      MYSQL_DATABASE: aurora_gem
+      MYSQL_USER: aurora_gem_db_admin
+      MYSQL_PASSWORD: my#db#password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql 
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+ 
+  

@@ -1,17 +1,20 @@
 
 # dependencies
-/node_modules
+node_modules/
 
 #compiled ts to js
-/dist
+dist/
 
 # testing
-/coverage
+coverage/
 
 # production
-/build
+build/
 
 # misc
 .DS_Store
 .env
 npm-debug.log
+
+backend/db_data/*.sock
+backend/db_data/*.log

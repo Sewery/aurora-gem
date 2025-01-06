@@ -290,7 +290,6 @@ INSERT INTO images (product_id, url, file_name) VALUES
 
 -- Insert data into orders
 INSERT INTO orders (order_date, customer_id, shipment) VALUES
-('2025-01-01 10:00:00', 1, 50.00),
 ('2025-01-02 14:30:00', 2, 40.00),
 ('2025-01-03 16:45:00', 3, 60.00),
 ('2025-01-04 11:20:00', 4, 55.00),

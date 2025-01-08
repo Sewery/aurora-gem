@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError,InternalAxiosRequestConfig } from 'axios';
 
+
 interface RefreshTokenResponse {
   accessToken: string;
  
@@ -18,6 +19,16 @@ const authAPI = axios.create({
 });
 
 let refreshTokenRequest: Promise<RefreshTokenResponse> | null = null;
+
+const handleUnauthenticated = () => {
+
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  
+  window.location.replace('/login');
+};
+
+
 
 
 
@@ -51,6 +62,10 @@ authAPI.interceptors.response.use(
 
       if (!refreshTokenRequest) {
         const refreshToken = localStorage.getItem('refreshToken');
+        if(!refreshToken){
+          handleUnauthenticated();
+          return Promise.reject(error);
+        }
         refreshTokenRequest = axios.post<RefreshTokenResponse>(
           'http://localhost:3030/api/refresh',
           { refreshToken: refreshToken }
@@ -70,8 +85,11 @@ authAPI.interceptors.response.use(
 
       
         return authAPI(originalRequest);
-      } catch (refreshError) {
+      } catch (refreshError:any) {
         refreshTokenRequest = null; 
+        if(refreshError.response?.status === 401){
+          handleUnauthenticated();
+        }
         console.error('Error refreshing token');
         return Promise.reject(refreshError);
       }
@@ -80,5 +98,7 @@ authAPI.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+
 
 export default authAPI;

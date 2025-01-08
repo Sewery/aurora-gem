@@ -10,18 +10,57 @@ import Product from "src/db/models/Product";
 import Category from "src/db/models/Category";
 import Customer from "src/db/models/Customer";
 export const getAll = async () => {
-  const products = await productsDal.getAll();
-  const result = await Promise.all(
-    products.map(async (product) => {
-      return await getDto(product);
-    })
-  );
-  return result;
+  let productsDto;
+  try {
+    const products = await productsDal.getAll();
+    productsDto = await Promise.all(
+      products.map(async (product) => {
+        return await getDto(product);
+      })
+    );
+  } catch (error) {
+    console.error("Error occured in product controller:", error);
+  }
+  return productsDto;
 };
 export const getById = async (id: number) => {
-  const product = await productsDal.getById(id);
-  const productDto = await getDto(product);
+  let productDto;
+  try {
+    const product = await productsDal.getById(id);
+    productDto = await getDto(product);
+  } catch (error) {
+    console.error("Error occured in product controller:", error);
+  }
   return productDto;
+};
+export const getByCategoryId = async (categoryId: number) => {
+  let productsDto;
+  try {
+    const products = await productsDal.getByCategoryId(categoryId);
+    productsDto = await Promise.all(
+      products.map(async (product) => {
+        return await getDto(product);
+      })
+    );
+  } catch (error) {
+    console.error("Error occured in product controller:", error);
+  }
+  return productsDto;
+};
+export const getByCategoryName = async (categoryName: string) => {
+  let productsDto;
+  try {
+    const category = await categoriesDal.getByName(categoryName);
+    const products = await productsDal.getByCategoryId(category.category_id);
+    productsDto = await Promise.all(
+      products.map(async (product) => {
+        return await getDto(product);
+      })
+    );
+  } catch (error) {
+    console.error("Error occured in product controller:", error);
+  }
+  return productsDto;
 };
 const getDto = async (product: Product) => {
   const opinions = await opinionsDal.getByProductId(product.product_id);
@@ -36,16 +75,18 @@ const toProductDto = async (
   images: Image[],
   category: Category
 ): Promise<ProductDto> => {
-  const opinionsDto = await Promise.all(opinions.map(async(v) => {
-    const customer:Customer = await customerDal.getById(v.customer_id)
-    return {
-      opinionId: v.opinion_id,
-      customerId: v.customer_id,
-      customerName: `${customer.firstname} ${customer.lastname}`,
-      content: v.content,
-      stars: v.stars,
-    };
-  }));
+  const opinionsDto = await Promise.all(
+    opinions.map(async (v) => {
+      const customer: Customer = await customerDal.getById(v.customer_id);
+      return {
+        opinionId: v.opinion_id,
+        customerId: v.customer_id,
+        customerName: `${customer.firstname} ${customer.lastname}`,
+        content: v.content,
+        stars: v.stars,
+      };
+    })
+  );
   const imagesDto = images.map((v) => {
     return {
       imageId: v.image_id,

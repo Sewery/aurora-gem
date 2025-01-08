@@ -11,3 +11,10 @@ export const getAll = async () => {
   const products = await Product.findAll();
   return products;
 };
+export const getByCategoryId = async (id: number) => {
+  const products = await Product.findAll({ where: { category_id: id } });
+  if (!products) {
+    throw new Error(`Products from category id: ${id} not found`);
+  }
+  return products;
+};

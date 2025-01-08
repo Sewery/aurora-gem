@@ -16,3 +16,11 @@ export const getById = async (id: number) => {
   }
   return category;
 };
+
+export const getByName = async (name: string) => {
+  const category = await Category.findOne({where:{name:name}});
+  if (!category) {
+    throw new Error(`Category with name:${name} not found`);
+  }
+  return category;
+};

@@ -4,6 +4,7 @@ import authAPI from "../../helpers/authAPI";
 import ProductDto from "../products/dto/ProductDto";
 import { NavigateFunction ,useNavigate} from "react-router-dom";
 
+
 const Categories = () => {
   const [activeTab, setActiveTab] = useState<boolean | string>(false); // No tab active initially
   const [categories, setCategories] = useState<ProductDto[]>();

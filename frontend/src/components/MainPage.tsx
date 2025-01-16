@@ -8,8 +8,7 @@ const MainPage = () => {
       <div className="text-black">
         <TopBar />
       </div>
-      <div>
-        
+      <div className="flex flex-col items-center">
         <Outlet />
       </div>
     </div>

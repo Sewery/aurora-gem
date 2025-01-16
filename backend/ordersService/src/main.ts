@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const PORT = process.env.PRODUCT_SERVICE_PORT || 3002;
+const PORT = process.env.ORDERS_SERVICE_PORT || 3002;
 
 app.use("/", routes);
 

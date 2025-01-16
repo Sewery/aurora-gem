@@ -11,7 +11,6 @@ const dbPassword = process.env.AURORA_DB_PASSWORD as string;
 const dbPort = process.env.AURORA_DB_PORT as string;
 
 
-console.log(dbPassword)
 const sequelizeConnection = new Sequelize({
   dialect: MySqlDialect,
   database: dbSchema,

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import authAPI from "../../helpers/authAPI";
 import ProductDto from "./dto/ProductDto";
 import OpinionList from "./opinions/OpinionList";
-import { Box, Button, Container, Divider, Paper } from "@mui/material";
+import { Box, Button, Divider, Paper } from "@mui/material";
 import AddOpinionCard from "./opinions/AddOpinionCard";
 export default function ProductDetails() {
   const { id } = useParams();
@@ -16,7 +16,8 @@ export default function ProductDetails() {
   }, [id]);
   return (
     <Paper className="flex flex-col items-center justify-center w-fit max-w-full p-16">
-      <Paper className="flex items-center p-8 min-h-96 justify-center  w-fit max-w-full">
+      <Paper>
+        <div className="flex items-center p-8 min-h-96 justify-center  w-fit max-w-full">
         <Box className="m-4 border rounded-md border-slate-700 shadow-lg overflow-hidden">
           <img  className="w-96 h-96 object-cover rounded-md" src={product?.images[0].url} alt={product?.name} />
         </Box>
@@ -34,8 +35,14 @@ export default function ProductDetails() {
             <div>{product?.shortDescription}</div>
           </div>
         </div>
+        </div>
+        <Divider className="mx-2" />
+        <section className="m-4">
+            {product?.description}
+          </section>
       </Paper>
-      <Divider className="m-4 " />
+  
+      <Divider className="m-4" />
       <div className="flex flex-col items-center justify-center">
         <AddOpinionCard />
         <OpinionList />

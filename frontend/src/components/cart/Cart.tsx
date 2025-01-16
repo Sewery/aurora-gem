@@ -4,7 +4,7 @@ import authAPI from "../../helpers/authAPI";
 import ProductDto from "../products/dto/ProductDto";
 import OrderedProduct from "./interfaces/OrderedProduct";
 import { Button } from "@mui/material";
-
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 function mapToOrderedProduct(
   product: ProductDto,
   quantity: number
@@ -59,28 +59,58 @@ export default function Cart() {
     fetchCartItems();
   }, []);
   useEffect(() => {
-    if(orderedProducts){
-        const sum = (a: number[]) => eval(a.join('+'));
-        const _totalPrice:number = sum(orderedProducts.map((val)=>val.price*val.quantity))
-        const _totalQuantity = sum(orderedProducts.map((val)=>val.quantity))
-        setTotalPrice(_totalPrice)
-        setTotalQuantity(_totalQuantity)
+    if (orderedProducts) {
+      const sum = (a: number[]) => eval(a.join("+"));
+      const _totalPrice: number = sum(
+        orderedProducts.map((val) => val.price * val.quantity)
+      );
+      const _totalQuantity = sum(orderedProducts.map((val) => val.quantity));
+      setTotalPrice(_totalPrice);
+      setTotalQuantity(_totalQuantity);
     }
   }, [orderedProducts]);
+
+  function handleOnClickMakeOrder() {
+    const emptyCart = async () => {
+      Object.keys(localStorage)
+        .filter((key) => key.startsWith("cart-item-"))
+        .forEach((key) => {
+          localStorage.removeItem(key);
+          alert("You successfully made an order");
+        });
+    };
+    emptyCart();
+  }
+
   return (
-    <div>{orderedProducts && orderedProducts.length!==0?(
-    <div className="flex gap-5 items-center">
-      <div>
-        <CartOrdersList products={orderedProducts}/>
-      </div>
-      <div>
-        <div>Number of items: {totalQuantity}</div>
-        <div>Total Price: <p className="text-xl font-bold">{totalPrice} zł</p></div>
-        <div>
-          <Button variant="contained">Make order</Button>
+    <div>
+      {orderedProducts && orderedProducts.length !== 0 && totalPrice && totalQuantity? (
+        <div className="flex gap-5 items-center">
+          <div>
+            <CartOrdersList products={orderedProducts} />
+          </div>
+          <div>
+            <div>Number of items: {totalQuantity}</div>
+            <div>Cost of shipment: {Math.max(totalPrice/10,20)}</div>
+            <div>
+              Total Price: <p className="text-xl font-bold">{totalPrice + Math.max(totalPrice/10,20) } zł</p>
+            </div>
+            <div>
+              <Button
+                variant="contained"
+                onClick={() => handleOnClickMakeOrder()}
+              >
+                Make order
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>):(<span className="mt-10 text-x3l">No products in cart</span>)}
+      ) : (
+        <div className="mt-10 text-3xl">
+          <p>No products in cart</p>
+          <SentimentDissatisfiedIcon className="text-9xl" />
+        </div>
+      )}
     </div>
   );
 }

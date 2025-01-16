@@ -28,14 +28,14 @@ export default function UserMenu() {
         }}
         onClick={handleClick}
       >
-        <div className="cursor-pointer ">
+        <div className="cursor-pointer flex ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className={"size-8"}
+            className={"size-8 self-center"}
           >
             <path
               strokeLinecap="round"

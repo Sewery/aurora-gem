@@ -14,7 +14,7 @@ export default function OpinionList() {
       });
     }, [id]);
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-6">
         {opinions ? (
           opinions.map((dto, index) => {
             return (

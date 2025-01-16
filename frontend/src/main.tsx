@@ -5,36 +5,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./index.css";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-import { createTheme, StyledEngineProvider } from "@mui/material";
+import { StyledEngineProvider } from "@mui/material";
+import theme from './styles/theme.tsx'
 const rootElement = document.getElementById("root")!;
 const root = createRoot(rootElement);
 const cache = createCache({
   key: "css",
   prepend: true,
-});
-const theme = createTheme({
-  components: {
-    MuiPopover: {
-      defaultProps: {
-        container: rootElement,
-      },
-    },
-    MuiPopper: {
-      defaultProps: {
-        container: rootElement,
-      },
-    },
-    MuiDialog: {
-      defaultProps: {
-        container: rootElement,
-      },
-    },
-    MuiModal: {
-      defaultProps: {
-        container: rootElement,
-      },
-    },
-  },
 });
 root.render(
   <StrictMode>

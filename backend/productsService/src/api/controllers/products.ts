@@ -99,6 +99,7 @@ const toProductDto = async (
     price: product.price,
     name: product.name,
     shortDescription: product.short_description,
+    description:product.description,
     availableQuantity: product.available_quantity,
     category: {
       categoryId: category.category_id,

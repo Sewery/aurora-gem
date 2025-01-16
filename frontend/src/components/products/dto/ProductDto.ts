@@ -6,6 +6,7 @@ export default interface ProductDto {
   price: number;
   name: string;
   shortDescription: string;
+  description: string;
   availableQuantity: number;
   category: CategoryDto;
   opinons: OpinionDto[];

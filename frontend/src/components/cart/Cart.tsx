@@ -27,7 +27,7 @@ async function fetchProducts(ids: [number, number][]) {
   const products = await Promise.all(
     ids.map(async ([id, quantity]) => {
       try {
-        const res = await authAPI.get(`products/${id}`);
+        const res = await authAPI.get(`http://localhost:3001/products/${id}`);
         if (res && res.data.result) {
           return mapToOrderedProduct(res.data.result, quantity);
         }
@@ -45,6 +45,7 @@ export default function Cart() {
   const [totalPrice, setTotalPrice] = useState<number>();
   const [totalQuantity, setTotalQuantity] = useState<number>();
   useEffect(() => {
+    console.log('xddddddddddddddd')
     const fetchCartItems = async () => {
       const keys: [number, number][] = Object.keys(localStorage)
         .filter((key) => key.startsWith("cart-item-"))
@@ -60,6 +61,8 @@ export default function Cart() {
   }, []);
   useEffect(() => {
     if (orderedProducts) {
+      console.log(orderedProducts)
+      console.log('xdddddSSSSSSSSdddddddddd')
       const sum = (a: number[]) => eval(a.join("+"));
       const _totalPrice: number = sum(
         orderedProducts.map((val) => val.price * val.quantity)
@@ -67,6 +70,8 @@ export default function Cart() {
       const _totalQuantity = sum(orderedProducts.map((val) => val.quantity));
       setTotalPrice(_totalPrice);
       setTotalQuantity(_totalQuantity);
+      console.log(_totalPrice)
+      console.log(_totalQuantity)
     }
   }, [orderedProducts]);
 

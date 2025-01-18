@@ -26,7 +26,7 @@ function AuthUserOptions({handleClose}: AuthUserOptionsProps) {
     return (
         <div>
             <MenuItem onClick={()=>{handleClose(); handleLogout(); }}>Log out</MenuItem>
-            <MenuItem onClick={()=>{handleClose; navigate('/orders')}}>My Orders</MenuItem>
+            <MenuItem onClick={()=>{handleClose(); navigate('/orders')}}>My Orders History</MenuItem>
         </div>
     )
 }

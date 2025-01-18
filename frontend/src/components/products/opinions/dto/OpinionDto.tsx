@@ -4,6 +4,6 @@ export default interface OpinionDto {
     customerName:string|null
     content: string;
     stars: number,
-    pruductId: number
+    productId: number
   }
   

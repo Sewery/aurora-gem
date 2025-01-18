@@ -24,65 +24,44 @@ const TopBar = () => {
   });
   return (
     <div className="flex flex-col items-center space-y-4 p-4 ">
-<<<<<<< HEAD
       <div className="w-full flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto px-4 py-2">
-  <div className="flex items-center w-full md:w-auto mb-4 md:mb-0">
-    <Paper
-      component="form"
-      className="py-1 px-2 flex items-center w-full md:w-64"
-    >
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Search Jewelry"
-        inputProps={{ "aria-label": "search jewelry" }}
-      />
-      <IconButton type="button" aria-label="search" className="p-2">
-        <SearchIcon />
-      </IconButton>
-    </Paper>
-  </div>
+        <div className="flex items-center w-full md:w-auto mb-4 md:mb-0">
+          <Paper
+            component="form"
+            className="py-1 px-2 flex items-center w-full md:w-64"
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search Jewelry"
+              inputProps={{ "aria-label": "search jewelry" }}
+            />
+            <IconButton type="button" aria-label="search" className="p-2">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+        </div>
 
-  {/* Logo */}
-  <div className="flex items-center justify-center cursor-pointer">
-    <img
-      src="/src/assets/logo.png"
-      alt="aurora_logo"
-      className="h-12 w-auto max-w-xs"
-      onClick={() => navigate(`/`, { replace: false })}
-    />
-    <h1 className="ml-3 text-2xl font-bold text-gray-800">Aurora Gem</h1>
-  </div>
-
-  {/* Cart and User Menu */}
-  <div className="flex items-center space-x-6 md:space-x-8 md:w-64 justify-end">
-    <Link to={`/cart/`} className="no-underline text-gray-800">
-      <Badge badgeContent={countCart} color="primary">
-        <ShoppingBagIcon className="text-3xl" />
-      </Badge>
-    </Link>
-    <UserMenu />
-  </div>
-</div>
-
-=======
-      <div className="w-full flex flex-col md:flex-row justify-center items-center max-w-[1280px] relative ">
-        <div className="w-full flex justify-center items-center mb-4 cursor-pointer  ">
+        {/* Logo */}
+        <div className="flex items-center justify-center cursor-pointer">
           <img
             src="/src/assets/logo.png"
-            alt="aurora_gem_logo"
+            alt="aurora_logo"
             className="h-12 w-auto max-w-xs"
             onClick={() => navigate(`/`, { replace: false })}
           />
           <h1 className="ml-3 text-2xl font-bold text-gray-800">Aurora Gem</h1>
         </div>
-        <div className="md:absolute md:end-4 flex justify-end items-end">
-        <Badge badgeContent={4} color="primary">
-            <ShoppingBagIcon />
-          </Badge>
-          <UserMenu/>
+
+        {/* Cart and User Menu */}
+        <div className="flex items-center space-x-6 md:space-x-8 md:w-64 justify-end">
+          <Link to={`/cart/`} className="no-underline text-gray-800">
+            <Badge badgeContent={countCart} color="primary">
+              <ShoppingBagIcon className="text-3xl" />
+            </Badge>
+          </Link>
+          <UserMenu />
         </div>
       </div>
->>>>>>> main
       <div className="w-full">
         <Categories />
       </div>

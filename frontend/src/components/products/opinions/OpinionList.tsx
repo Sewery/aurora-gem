@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import OpinionCard from "./OpinionCard";
 import axios from "axios";
+import authAPI from "../../../helpers/authAPI";
 
 export default function OpinionList() {
     const { id } = useParams();
     const [opinions, setOpinions] = useState<OpinionDto[]>();
     useEffect(() => {
-      console.log(`http://localhost:3003/opinions/product/${id}`)
-      axios.get(`http://localhost:3003/opinions/product/${id}`).then((res) => {
+      
+      authAPI.get(`http://localhost:3003/opinions/product/${id}`).then((res) => {
         if (res && res.data.result) setOpinions(res.data.result);
       });
     }, [id]);
@@ -21,6 +22,7 @@ export default function OpinionList() {
               <div key={index}>
                   <OpinionCard opinion={dto} />
               </div>
+              
             );
           })
         ) : (

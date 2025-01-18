@@ -12,7 +12,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   }
 
 const authAPI = axios.create({
-  baseURL: 'http://localhost:3001',
+ 
   headers: {
     'Content-Type': 'application/json',
   },

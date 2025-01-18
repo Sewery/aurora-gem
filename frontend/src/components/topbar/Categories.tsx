@@ -10,7 +10,7 @@ const Categories = () => {
   const [categories, setCategories] = useState<ProductDto[]>();
   const navigate: NavigateFunction = useNavigate();
   useEffect(() => {
-    authAPI.get("categories/").then((res) => {
+    authAPI.get("http://localhost:3001/categories/").then((res) => {
       if (res && res.data.result) setCategories(res.data.result);
     });
   }, []);
@@ -28,7 +28,7 @@ const Categories = () => {
         centered
       >
         {categories?.map((cat) => {
-          return <Tab label={cat.name} value={cat.name} />;
+          return <Tab label={cat.name} value={cat.name} key={cat.name} />;
         })}
       </Tabs>
     </Box>

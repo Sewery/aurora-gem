@@ -9,7 +9,7 @@ export default function ProductList() {
   const { categoryName } = useParams();
   const [products, setProducts] = useState<ProductDto[]>();
   useEffect(() => {
-    authAPI.get(`products/category/${categoryName}`).then((res) => {
+    authAPI.get(`http://localhost:3001/products/category/${categoryName}`).then((res) => {
       if (res && res.data.result) setProducts(res.data.result);
     });
   }, [categoryName]);

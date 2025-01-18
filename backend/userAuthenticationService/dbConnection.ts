@@ -8,11 +8,11 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
 
-const DB_HOST = process.env.DB_HOST as string;
-const DB_USER = process.env.DB_USER as string;
-const DB_PASSWORD = process.env.DB_PASSWORD as string;
-const DB_NAME = process.env.DB_NAME as string;
-const DB_PORT = process.env.DB_PORT  as string;
+const DB_HOST = process.env.AURORA_DB_HOST as string;
+const DB_USER = process.env.AURORA_DB_USER as string;
+const DB_PASSWORD = process.env.AURORA_DB_PASSWORD as string;
+const DB_NAME = process.env.AURORA_DB_NAME as string;
+const DB_PORT = process.env.AURORA_DB_PORT  as string;
 
 const dbConnection= new Sequelize({
     dialect: MySqlDialect,
@@ -26,8 +26,8 @@ const dbConnection= new Sequelize({
 dbConnection.authenticate()
 .then(() => {
     console.log('Connection has been established successfully.');
-}).catch(() => {
-    console.error('Unable to connect to the database');
+}).catch((e) => {
+    console.error('Unable to connect to the database'+e);
 })
 
 export default dbConnection;

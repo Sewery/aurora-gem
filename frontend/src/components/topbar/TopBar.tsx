@@ -11,7 +11,7 @@ const TopBar = () => {
         <div className="w-full flex justify-center items-center mb-4 cursor-pointer  ">
           <img
             src="/src/assets/logo.png"
-            alt="apart_logo"
+            alt="aurora_gem_logo"
             className="h-12 w-auto max-w-xs"
             onClick={() => navigate(`/`, { replace: false })}
           />

@@ -9,7 +9,7 @@ export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductDto>();
   useEffect(() => {
-    authAPI.get(`products/${id}`).then((res) => {
+    authAPI.get(`http://localhost:3001/products/${id}`).then((res) => {
       console.log(res.data);
       if (res && res.data.result) setProduct(res.data.result);
     });

@@ -24,6 +24,7 @@ const TopBar = () => {
   });
   return (
     <div className="flex flex-col items-center space-y-4 p-4 ">
+<<<<<<< HEAD
       <div className="w-full flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto px-4 py-2">
   <div className="flex items-center w-full md:w-auto mb-4 md:mb-0">
     <Paper
@@ -63,6 +64,25 @@ const TopBar = () => {
   </div>
 </div>
 
+=======
+      <div className="w-full flex flex-col md:flex-row justify-center items-center max-w-[1280px] relative ">
+        <div className="w-full flex justify-center items-center mb-4 cursor-pointer  ">
+          <img
+            src="/src/assets/logo.png"
+            alt="aurora_gem_logo"
+            className="h-12 w-auto max-w-xs"
+            onClick={() => navigate(`/`, { replace: false })}
+          />
+          <h1 className="ml-3 text-2xl font-bold text-gray-800">Aurora Gem</h1>
+        </div>
+        <div className="md:absolute md:end-4 flex justify-end items-end">
+        <Badge badgeContent={4} color="primary">
+            <ShoppingBagIcon />
+          </Badge>
+          <UserMenu/>
+        </div>
+      </div>
+>>>>>>> main
       <div className="w-full">
         <Categories />
       </div>

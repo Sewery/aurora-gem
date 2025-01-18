@@ -20,6 +20,7 @@ class Customer extends Model<InferAttributes<Customer>, InferCreationAttributes<
     declare password: string;
     declare postal_code: string;
     declare address: string;
+    declare is_admin: boolean;
 }
   
 
@@ -50,11 +51,17 @@ Customer.init({
     ,
     postal_code: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
     address:{
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
+    },
+    is_admin:
+    {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     sequelize: dbConnection,

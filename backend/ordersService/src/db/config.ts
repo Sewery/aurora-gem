@@ -2,7 +2,7 @@ import { Sequelize } from "@sequelize/core";
 import { MySqlDialect } from "@sequelize/mysql";
 import dotenv from "dotenv";
 // import path from "path";
-dotenv.config({ path:  './.env' });
+dotenv.config({ path:  '../.env' });
 const dbSchema = process.env.AURORA_DB_NAME as string;
 const dbUser = process.env.AURORA_DB_USER as string;
 const dbHost = process.env.AURORA_DB_HOST as string;;

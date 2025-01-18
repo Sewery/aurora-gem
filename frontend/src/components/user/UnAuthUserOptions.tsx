@@ -1,6 +1,6 @@
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
-import  UnAuthUserOptionsProps  from './interfaces/UnAuthUserOptionsProps';
+import  UnAuthUserOptionsProps  from '../../interfaces/UnAuthUserOptionsProps';
 
 
 

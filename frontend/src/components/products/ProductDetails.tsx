@@ -11,7 +11,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState<ProductDto>();
   const [orderValue,setOrderValue] = useState<number>(1)
   useEffect(() => {
-    authAPI.get(`products/${id}`).then((res) => {
+    authAPI.get(`http://localhost:3001/products/${id}`).then((res) => {
       console.log(res.data);
       if (res && res.data.result) setProduct(res.data.result);
     });

@@ -11,3 +11,8 @@ export const getAll = async () => {
   const products = await Product.findAll();
   return products;
 };
+export const updateQuantity = async (quantity:number,productId:number) =>{
+  const product = await getById(productId)
+  product.available_quantity =   product.available_quantity -quantity;
+  await product.save();
+}

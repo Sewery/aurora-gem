@@ -24,7 +24,6 @@ const AuthorizedMiddleware:RequestHandler = (req:CustomerRequest, res:Response, 
         return;
     }
     const token = authorization.split(' ')[1];
-    
     try{
         const customer = jwt.verify(token, SECRET_KEY_ACCESS) as CustomerInterface;
         req.customer = customer;

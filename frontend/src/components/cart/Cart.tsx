@@ -3,8 +3,16 @@ import CartOrdersList from "./CartOrdersList";
 import authAPI from "../../helpers/authAPI";
 import ProductDto from "../products/dto/ProductDto";
 import OrderedProduct from "./interfaces/OrderedProduct";
-import { Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import CheckIcon from "@mui/icons-material/Check";
+
+interface OrderedProductsReq {
+  productId: number;
+  quantity: number;
+  price: number;
+}
+
 function mapToOrderedProduct(
   product: ProductDto,
   quantity: number
@@ -39,13 +47,27 @@ async function fetchProducts(ids: [number, number][]) {
   );
   return products.filter((order) => order != null) as OrderedProduct[];
 }
+async function postOrderedProducts(orderReq: OrderedProductsReq[]) {
+  await authAPI.post(`http://localhost:3002/orders/`, orderReq);
+}
 
+interface AlertInfo {
+  showSuccess: boolean;
+  showInfo: boolean;
+  showError: boolean;
+  message: string;
+}
 export default function Cart() {
-  const [orderedProducts, setOrderedProducts] = useState<OrderedProduct[]>();
+  const [selectedProducts, setSelectedProducts] = useState<OrderedProduct[]>();
   const [totalPrice, setTotalPrice] = useState<number>();
   const [totalQuantity, setTotalQuantity] = useState<number>();
+  const [showAlert, setShowAlert] = useState<AlertInfo>({
+    showSuccess: false,
+    showInfo: false,
+    showError: false,
+    message:""
+  });
   useEffect(() => {
-    console.log('xddddddddddddddd')
     const fetchCartItems = async () => {
       const keys: [number, number][] = Object.keys(localStorage)
         .filter((key) => key.startsWith("cart-item-"))
@@ -55,50 +77,98 @@ export default function Cart() {
           return null;
         })
         .filter((item): item is [number, number] => item != null);
-      setOrderedProducts(await fetchProducts(keys));
+      setSelectedProducts(await fetchProducts(keys));
     };
     fetchCartItems();
   }, []);
   useEffect(() => {
-    if (orderedProducts) {
-      console.log(orderedProducts)
-      console.log('xdddddSSSSSSSSdddddddddd')
+    if (selectedProducts) {
       const sum = (a: number[]) => eval(a.join("+"));
       const _totalPrice: number = sum(
-        orderedProducts.map((val) => val.price * val.quantity)
+        selectedProducts.map((val) => val.price * val.quantity)
       );
-      const _totalQuantity = sum(orderedProducts.map((val) => val.quantity));
+      const _totalQuantity = sum(selectedProducts.map((val) => val.quantity));
       setTotalPrice(_totalPrice);
       setTotalQuantity(_totalQuantity);
-      console.log(_totalPrice)
-      console.log(_totalQuantity)
     }
-  }, [orderedProducts]);
+  }, [selectedProducts]);
 
-  function handleOnClickMakeOrder() {
-    const emptyCart = async () => {
-      Object.keys(localStorage)
-        .filter((key) => key.startsWith("cart-item-"))
-        .forEach((key) => {
-          localStorage.removeItem(key);
-          alert("You successfully made an order");
-        });
+  async function handleOnClickMakeOrder() {
+    const emptyCart = () => {
+      const cartKeys = Object.keys(localStorage).filter((key) =>
+        key.startsWith("cart-item-")
+      );
+      cartKeys.forEach((key) => localStorage.removeItem(key));
     };
-    emptyCart();
+    try {
+      if (selectedProducts) {
+        const req: OrderedProductsReq[] = selectedProducts.map((p) => ({
+          productId: p.productId,
+          quantity: p.quantity,
+          price: p.price,
+        }));
+
+        await postOrderedProducts(req);
+        emptyCart();
+        setSelectedProducts([]);
+
+        setShowAlert({
+          showSuccess: true,
+          showInfo: false,
+          showError: false,
+          message: "You successfully made an order!",
+        });
+      }
+    } catch (error) {
+      console.error("Error while making an order:", error);
+      setShowAlert({
+        showSuccess: false,
+        showInfo: false,
+        showError: true,
+        message: "Failed to make the order. Please try again.",
+      });
+    }
   }
+  const hasProducts =
+    selectedProducts &&
+    selectedProducts.length > 0 &&
+    totalPrice &&
+    totalQuantity;
 
   return (
     <div>
-      {orderedProducts && orderedProducts.length !== 0 && totalPrice && totalQuantity? (
+      {showAlert.showSuccess && (
+        <Alert
+          variant="outlined"
+          severity="success"
+          onClose={() => setShowAlert({ ...showAlert, showSuccess: false })}
+          icon={<CheckIcon fontSize="inherit" />}
+        >
+          {showAlert.message}
+        </Alert>
+      )}
+      {showAlert.showError && (
+        <Alert
+          variant="outlined"
+          severity="error"
+          onClose={() => setShowAlert({ ...showAlert, showError: false })}
+        >
+          {showAlert.message}
+        </Alert>
+      )}
+      {hasProducts ? (
         <div className="flex gap-5 items-center">
           <div>
-            <CartOrdersList products={orderedProducts} />
+            <CartOrdersList products={selectedProducts} />
           </div>
           <div>
             <div>Number of items: {totalQuantity}</div>
-            <div>Cost of shipment: {Math.max(totalPrice/10,20)}</div>
+            <div>Cost of shipment: {Math.max(totalPrice / 10, 20)}</div>
             <div>
-              Total Price: <p className="text-xl font-bold">{totalPrice + Math.max(totalPrice/10,20) } zł</p>
+              Total Price:{" "}
+              <p className="text-xl font-bold">
+                {totalPrice + Math.max(totalPrice / 10, 20)} zł
+              </p>
             </div>
             <div>
               <Button

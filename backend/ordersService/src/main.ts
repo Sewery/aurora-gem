@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from "express";
 import sequelizeConnection from "./db/config";
 import routes from "./api/routes";
+// import AuthorizedMiddleware from "./authMiddleware"
 const app = express();
 
 app.use(cors());
@@ -10,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.ORDERS_SERVICE_PORT || 3002;
-
+// app.use(AuthorizedMiddleware)
 app.use("/", routes);
 
 (async () => {

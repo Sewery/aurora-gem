@@ -19,7 +19,6 @@ productsRouter.get("/categoryId/:id", async (req: Request, res: Response) => {
 });
 productsRouter.get("/category/:name", async (req: Request, res: Response) => {
   const categoryName = req.params.name;
-  console.log(categoryName)
   const result = await getByCategoryName(categoryName);
   res.status(200).json({ result });
 });

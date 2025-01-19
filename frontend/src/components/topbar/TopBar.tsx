@@ -24,11 +24,11 @@ const TopBar = () => {
   });
   return (
     <div className="flex flex-col items-center space-y-4 p-4 ">
-      <div className="w-full flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto px-4 py-2">
+      <div className="w-full flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto">
         <div className="flex items-center w-full md:w-auto mb-4 md:mb-0">
           <Paper
             component="form"
-            className="py-1 px-2 flex items-center w-full md:w-64"
+            className=" flex items-center w-full md:w-64"
           >
             <InputBase
               sx={{ ml: 1, flex: 1 }}

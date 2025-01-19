@@ -10,7 +10,7 @@ import CheckIcon from "@mui/icons-material/Check";
 interface OrderedProductsReq {
   productId: number;
   quantity: number;
-  price:number;
+  price: number;
 }
 
 function mapToOrderedProduct(
@@ -48,14 +48,26 @@ async function fetchProducts(ids: [number, number][]) {
   return products.filter((order) => order != null) as OrderedProduct[];
 }
 async function postOrderedProducts(orderReq: OrderedProductsReq[]) {
-  console.log(orderReq)
+  console.log(orderReq);
   await authAPI.post(`http://localhost:3002/orders/`, orderReq);
 }
 
+interface AlertInfo {
+  showSuccess: boolean;
+  showInfo: boolean;
+  showError: boolean;
+  message: string;
+}
 export default function Cart() {
   const [selectedProducts, setSelectedProducts] = useState<OrderedProduct[]>();
   const [totalPrice, setTotalPrice] = useState<number>();
   const [totalQuantity, setTotalQuantity] = useState<number>();
+  const [showAlert, setShowAlert] = useState<AlertInfo>({
+    showSuccess: false,
+    showInfo: false,
+    showError: false,
+    message:""
+  });
   useEffect(() => {
     const fetchCartItems = async () => {
       const keys: [number, number][] = Object.keys(localStorage)
@@ -84,32 +96,68 @@ export default function Cart() {
   }, [selectedProducts]);
 
   async function handleOnClickMakeOrder() {
-    const emptyCart = async () => {
-      const cartKeys = Object.keys(localStorage).filter((key) => key.startsWith("cart-item-"));
+    const emptyCart = () => {
+      const cartKeys = Object.keys(localStorage).filter((key) =>
+        key.startsWith("cart-item-")
+      );
       cartKeys.forEach((key) => localStorage.removeItem(key));
+    };
+    try {
       if (selectedProducts) {
-        
         const req: OrderedProductsReq[] = selectedProducts.map((p) => ({
           productId: p.productId,
           quantity: p.quantity,
-          price:p.price
+          price: p.price,
         }));
-    
+
         await postOrderedProducts(req);
-        <Alert variant="outlined" icon={<CheckIcon fontSize="inherit" />} severity="success">"You successfully made an order"</Alert>
-    }
-    };
-    try {
-      await emptyCart();
+        emptyCart();
+        setSelectedProducts([]);
+
+        setShowAlert({
+          showSuccess: true,
+          showInfo: false,
+          showError: false,
+          message: "You successfully made an order!",
+        });
+      }
     } catch (error) {
       console.error("Error while making an order:", error);
-      <Alert variant="outlined"  severity="error">"Failed to make the order. Please try again."</Alert>
+      setShowAlert({
+        showSuccess: false,
+        showInfo: false,
+        showError: true,
+        message: "Failed to make the order. Please try again.",
+      });
     }
   }
-  const hasProducts = selectedProducts && selectedProducts.length > 0 && totalPrice && totalQuantity;
+  const hasProducts =
+    selectedProducts &&
+    selectedProducts.length > 0 &&
+    totalPrice &&
+    totalQuantity;
 
   return (
     <div>
+      {showAlert.showSuccess && (
+        <Alert
+          variant="outlined"
+          severity="success"
+          onClose={() => setShowAlert({ ...showAlert, showSuccess: false })}
+          icon={<CheckIcon fontSize="inherit" />}
+        >
+          {showAlert.message}
+        </Alert>
+      )}
+      {showAlert.showError && (
+        <Alert
+          variant="outlined"
+          severity="error"
+          onClose={() => setShowAlert({ ...showAlert, showError: false })}
+        >
+          {showAlert.message}
+        </Alert>
+      )}
       {hasProducts ? (
         <div className="flex gap-5 items-center">
           <div>

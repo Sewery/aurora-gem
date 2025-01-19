@@ -4,10 +4,11 @@ import UserMenu from "../user/UserMenu";
 import { Badge, IconButton, InputBase, Paper, TextField } from "@mui/material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import SearchIcon from "@mui/icons-material/Search";
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 const TopBar = () => {
   const navigate: NavigateFunction = useNavigate();
   const [countCart, setCountCart] = useState<number>(0);
+  const [search, setSearch] = useState<string>("");
   useEffect(() => {
     const fetchCartItemsCount = async () => {
       const sum = (a: number[]) => eval(a.join("+"));
@@ -22,6 +23,11 @@ const TopBar = () => {
     };
     fetchCartItemsCount();
   });
+  const handleSearch = (value:String) => {
+    navigate(`/search/${value}`, { replace: false });
+  };
+
+
   return (
     <div className="flex flex-col items-center space-y-4 p-4 ">
       <div className="w-full flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto">
@@ -34,9 +40,18 @@ const TopBar = () => {
               sx={{ ml: 1, flex: 1 }}
               placeholder="Search Jewelry"
               inputProps={{ "aria-label": "search jewelry" }}
+              onChange={(e) => setSearch(e.target.value)}
+              
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch(search);
+                
+                }
+              
+              }}
             />
-            <IconButton type="button" aria-label="search" className="p-2">
-              <SearchIcon />
+            <IconButton type="button" aria-label="search" className="p-2" onClick={()=>{handleSearch(search)}}>
+              <SearchIcon  />
             </IconButton>
           </Paper>
         </div>

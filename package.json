@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "dev": "npm install && concurrently \"npm:backend-orders\" \"npm:backend-opinions\" \"npm:backend-products\" \"npm:backend-auth\" \"npm:frontend\"",
+    "dev": "npm install && concurrently \"npm:backend-orders\" \"npm:backend-opinions\" \"npm:backend-products\" \"npm:backend-auth\" \"npm:frontend\" \"npm:backend\"",
     "backend-orders": "cd backend/ordersService && npm install && npm run dev",
     "backend-opinions": "cd backend/opinionsService && npm install && npm run dev",
     "backend-products": "cd backend/productsService && npm install && npm run dev",
     "backend-auth": "cd backend/userAuthenticationService && npm install && npm run dev",
+    "backend": "cd backend && npm install",
     "frontend": "cd frontend && npm install && npm run dev"
   },
   "devDependencies": {

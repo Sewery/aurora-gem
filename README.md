@@ -1,4 +1,4 @@
-# Aurora Gem - Full Web Stack App
+# Aurora Gem - Full Stack  Web App
 
 This repository is for laboratory classes WDAI at AGH.
 
@@ -23,14 +23,11 @@ To run this project, ensure the following are installed:
 # Navigate to the backend directory
 cd /backend
 
-# Run Docker, install dependencies, and start services
-./start.sh
+# Run Docker, 
+docker compose up -d
 
-# Navigate to the frontend directory
-cd ../frontend
-
-# Install frontend dependencies
-npm install
+# Navigate to the main directory
+cd ..
 
 # Start the development server
 npm run dev

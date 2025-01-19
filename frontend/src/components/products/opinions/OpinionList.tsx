@@ -8,20 +8,27 @@ import isUserAdmin from "../../../helpers/isUserAdmin";
 export default function OpinionList() {
   const { id } = useParams();
   const [opinions, setOpinions] = useState<OpinionDto[]>();
+  const [userOpinions, setUserOpinions] = useState<OpinionDto[]>([]);
   useEffect(() => {
     authAPI.get(`http://localhost:3003/opinions/product/${id}`).then((res) => {
       if (res && res.data.result) setOpinions(res.data.result);
     });
-  }, [id,opinions]);
+  }, [id, opinions]);
+  useEffect(() => {
+    if (userAuthenticated())
+      authAPI.get(`http://localhost:3003/opinions/customer/`).then((res) => {
+        if (res && res.data.result) setUserOpinions(res.data.result);
+      });
+  }, []);
   const onChangeClick = (opinion: OpinionDto) => {
-    if (userAuthenticated() &&  isUserAdmin()) {
-      authAPI.patch(`https//localhost:3003/${opinion.opinionId}`);
+    if (userAuthenticated() && isUserAdmin()) {
+      authAPI.patch(`http://localhost:3003/opinions/${opinion.opinionId}`);
       setOpinions(opinions?.filter((op) => op.opinionId != opinion.opinionId));
     }
   };
   const onDeleteClick = (opinion: OpinionDto) => {
     if (userAuthenticated() && isUserAdmin()) {
-      authAPI.delete(`https//localhost:3003/${opinion.opinionId}`);
+      authAPI.delete(`http://localhost:3003/opinions/${opinion.opinionId}`);
       setOpinions(opinions?.filter((op) => op.opinionId != opinion.opinionId));
     }
   };
@@ -36,9 +43,10 @@ export default function OpinionList() {
                 <OpinionCard
                   opinion={dto}
                   callbacks={{
-                    onChange:()=> onChangeClick(dto),
-                    onDelete:()=>  onDeleteClick(dto),
+                    onChange: () => onChangeClick(dto),
+                    onDelete: () => onDeleteClick(dto),
                   }}
+                  userOpinion={userOpinions.some(v=>v.opinionId==dto.opinionId)}
                 />
               </div>
             );

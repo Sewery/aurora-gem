@@ -16,13 +16,15 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useState } from "react";
 import EditOpinionCard from "./EditOpinionCard";
 import AlertDialog from "../../others/AlertDialog";
+import userAuthenticated from "../../../helpers/userAuthenticated";
+import isUserAdmin from "../../../helpers/isUserAdmin";
 
 interface OpinionCallbacks{
   onChange:(opinionId:number)=>void
   onDelete:()=>void
 }
 
-export default function OpinionCard({ opinion,callbacks }: { opinion: OpinionDto,callbacks:OpinionCallbacks }) {
+export default function OpinionCard({ opinion,callbacks,userOpinion }: { opinion: OpinionDto,callbacks:OpinionCallbacks,userOpinion:boolean }) {
   const [isEdited,setIsEdited] = useState(false)
   const [isAlertOpen,setIsAlertOpen] =useState(false)
   const onEditClick =()=>{
@@ -54,16 +56,19 @@ export default function OpinionCard({ opinion,callbacks }: { opinion: OpinionDto
         }
         action={
           <Box>
-            <Tooltip title="Edit">
+            {userAuthenticated() && userOpinion &&    (<Tooltip title="Edit">
               <IconButton aria-label="edit" onClick={onEditClick}>
                 <EditIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Delete">
-              <IconButton aria-label="delete" onClick={callbacks.onDelete}>
+          )}
+
+            {userAuthenticated() && (userOpinion || isUserAdmin())  && 
+            (<Tooltip title="Delete">
+              <IconButton aria-label="delete" onClick={()=>setIsAlertOpen(true)}>
                 <ClearIcon />
               </IconButton>
-            </Tooltip>
+            </Tooltip>)}
           </Box>
         }
         title={

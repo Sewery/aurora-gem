@@ -23,7 +23,6 @@ export default function AddOpinionCard() {
       await authAPI.get(`http://localhost:3003/opinions/customer/`)
       .then((res)=>{
         const opinions:OpinionDto[]=res.data.result
-        console.log(opinions)
         setOpinionAdded(opinions.some((op)=>  op.productId === parseInt(id!)))
       })
       .catch(err=>{

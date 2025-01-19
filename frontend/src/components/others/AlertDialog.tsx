@@ -30,12 +30,12 @@ export default function AlertDialog(props: DialogProps) {
           {props.content}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button variant="outlined" onClick={props.onDisagree}>
-          Disagree
+      <DialogActions className="flex gap-2">
+      <Button variant="outlined" onClick={props.onAgree} autoFocus>
+          Yes
         </Button>
-        <Button onClick={props.onAgree} autoFocus>
-          Agree
+        <Button  onClick={props.onDisagree}>
+          No
         </Button>
       </DialogActions>
     </Dialog>

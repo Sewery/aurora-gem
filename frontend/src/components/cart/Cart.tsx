@@ -48,7 +48,6 @@ async function fetchProducts(ids: [number, number][]) {
   return products.filter((order) => order != null) as OrderedProduct[];
 }
 async function postOrderedProducts(orderReq: OrderedProductsReq[]) {
-  console.log(orderReq);
   await authAPI.post(`http://localhost:3002/orders/`, orderReq);
 }
 
@@ -84,7 +83,6 @@ export default function Cart() {
   }, []);
   useEffect(() => {
     if (selectedProducts) {
-      console.log(selectedProducts);
       const sum = (a: number[]) => eval(a.join("+"));
       const _totalPrice: number = sum(
         selectedProducts.map((val) => val.price * val.quantity)

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { getAll, getById,getByCategoryId, getByCategoryName } from "../../api/controllers/products";
+import { getAll, getById,getByCategoryId, getByCategoryName, getByName} from "../../api/controllers/products";
 
 export const productsRouter = Router();
 
@@ -21,4 +21,12 @@ productsRouter.get("/category/:name", async (req: Request, res: Response) => {
   const categoryName = req.params.name;
   const result = await getByCategoryName(categoryName);
   res.status(200).json({ result });
+});
+
+productsRouter.get("/search/:name", async (req: Request, res: Response) => {
+  const productName = req.params.name;
+  const result = await getByName(productName);
+ 
+  res.status(200).json({ result });
+
 });

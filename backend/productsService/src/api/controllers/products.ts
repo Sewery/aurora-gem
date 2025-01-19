@@ -62,6 +62,22 @@ export const getByCategoryName = async (categoryName: string) => {
   }
   return productsDto;
 };
+
+export const getByName = async (name: string) => {
+  let productsDto;
+  try {
+    const products = await productsDal.getByName(name);
+    productsDto = await Promise.all(
+      products.map(async (product) => {
+        return await getDto(product);
+      })
+    );
+  } catch (error) {
+    console.error("Error occured in product controller:", error);
+  }
+  return productsDto;
+}
+
 const getDto = async (product: Product) => {
   const opinions = await opinionsDal.getByProductId(product.product_id);
   const images = await imagesDal.getByProductId(product.product_id);

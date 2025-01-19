@@ -6,49 +6,41 @@ import {
   Paper,
   Rating,
 } from "@mui/material";
-import axios from "axios";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import OpinionDto from "./dto/OpinionDto";
-function mapToOpinionDto(
-  cutomerId: number,
-  stars: number,
-  content: string,
-  productId: number
-): OpinionDto {
-  return {
-    opinionId: null,
-    customerId: cutomerId,
-    customerName: null,
-    content: content,
-    stars: stars,
-    productId: productId,
-  };
-}
+import {OpinionDto,mapToOpinionDto} from "./dto/OpinionDto";
+import authAPI from "../../../helpers/authAPI";
+import userAuthenticated from "../../../helpers/userAuthenticated";
+
 export default function AddOpinionCard() {
   const { id } = useParams();
-  const customerId = 1;
   const [stars, setStars] = useState<number>(0);
   const [content, setContent] = useState<string>("");
   const [opinionAdded,setOpinionAdded] = useState<boolean>(false)
 
   const userOpinion = useCallback(async()=>{
-      axios.get(`http://localhost:3003/opinions/customer/${id}`)
+    if(userAuthenticated()){
+      await authAPI.get(`http://localhost:3003/opinions/customer/`)
       .then((res)=>{
         const opinions:OpinionDto[]=res.data.result
+        console.log(opinions)
         setOpinionAdded(opinions.some((op)=>  op.productId === parseInt(id!)))
       })
-  },[customerId,id])
+      .catch(err=>{
+        console.error(err)
+    })
+    }
+    
+  },[id])
   useEffect(() => {
     userOpinion();
   }, [userOpinion]);
   function onSubmitClick() {
-    axios
-    .post(`http://localhost:3003/opinions/`,mapToOpinionDto(customerId,stars,content,Number(id)))
-    .then((res)=>{
-      setStars(res.data.result.stars)
-      setContent(res.data.result.content)
-    });
+    const opinion = mapToOpinionDto(null,stars,content,Number(id))
+    console.log(opinion)
+    authAPI
+    .post(`http://localhost:3003/opinions/`,opinion)
+    .catch((error)=> console.log(error))
     setOpinionAdded(true)
   }
   return <>

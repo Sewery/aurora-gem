@@ -1,23 +1,49 @@
 import {
   Avatar,
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
-  Container,
   IconButton,
   Rating,
   Tooltip,
   Typography,
 } from "@mui/material";
-import OpinionDto from "./dto/OpinionDto";
+import {OpinionDto} from "./dto/OpinionDto";
 import EditIcon from "@mui/icons-material/Edit";
 import { red } from "@mui/material/colors";
 import ClearIcon from "@mui/icons-material/Clear";
-export default function OpinionCard({ opinion }: { opinion: OpinionDto }) {
+import { useState } from "react";
+import EditOpinionCard from "./EditOpinionCard";
+import AlertDialog from "../../others/AlertDialog";
+
+interface OpinionCallbacks{
+  onChange:(opinionId:number)=>void
+  onDelete:()=>void
+}
+
+export default function OpinionCard({ opinion,callbacks }: { opinion: OpinionDto,callbacks:OpinionCallbacks }) {
+  const [isEdited,setIsEdited] = useState(false)
+  const [isAlertOpen,setIsAlertOpen] =useState(false)
+  const onEditClick =()=>{
+    setIsEdited(true)
+  }
+  const onCloseClick =()=>{
+    setIsEdited(false)
+  }
   return (
+    <>
+      <AlertDialog 
+        title="Delete opinion" 
+        open={isAlertOpen}
+        content="Are you sure you want to delete this opinion"
+        onAgree={()=>{
+          callbacks.onDelete()
+          setIsAlertOpen(false)
+        }}
+        onDisagree={()=>setIsAlertOpen(false)}
+        />
+    {isEdited?<EditOpinionCard opinion={opinion} onClose={onCloseClick}/>:
     <Card sx={{ minWidth: 500 }}>
       <CardHeader
         className="flex justify-start items-center pb-0"
@@ -29,12 +55,12 @@ export default function OpinionCard({ opinion }: { opinion: OpinionDto }) {
         action={
           <Box>
             <Tooltip title="Edit">
-              <IconButton aria-label="edit">
+              <IconButton aria-label="edit" onClick={onEditClick}>
                 <EditIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Delete">
-              <IconButton aria-label="delete">
+              <IconButton aria-label="delete" onClick={callbacks.onDelete}>
                 <ClearIcon />
               </IconButton>
             </Tooltip>
@@ -57,5 +83,5 @@ export default function OpinionCard({ opinion }: { opinion: OpinionDto }) {
         </Typography>
       </CardContent>
     </Card>
-  );
+  }</>);
 }

@@ -2,7 +2,8 @@ import * as orderDal from "../../db/dal/order";
 import { Order} from "../../db/models/Order";
 import OrderDto from "../dto/OrderDto";
 import * as ordersController from "./ordersDetails";
-export const getByCustomerId = async (id: number) => {
+import OrderedProductsReq  from "../dto/OrderedProductsReq"
+export const getByCustomerId = async (id: number):Promise<OrderDto[]> => {
   const orders:Order[] = await orderDal.getByCustomerId(id);
   const ordersCustomer: OrderDto[] = await Promise.all(
     orders.map(async (ord:Order) => {
@@ -16,22 +17,21 @@ export const getByCustomerId = async (id: number) => {
       };
     })
   );
-  return {
-    customerId: id,
-    orders: ordersCustomer,
-  };
+  return ordersCustomer;
 };
-export const getByOrderId = async (id: number) => {
+export const getByOrderId = async (id: number):Promise<OrderDto> => {
     const order:Order = await orderDal.getById(id);
     const [ordersDetails, totalPrice] = await ordersController.getByOrderId(order.order_id);
-    return {
-      customerId: id,
-      order: {
+    return{
         orderId: order.order_id,
         orderDate: order.order_date.toDateString(),
         ordersDetails: ordersDetails,
         totalPrice: totalPrice,
         shipment: order.shipment,
       }
-    };
   };
+
+  export const postOrder =async (req: OrderedProductsReq[], id: number)=> {
+    orderDal.addOrderWithDetails(id,20,req)
+    console.log(req)
+  }

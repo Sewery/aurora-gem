@@ -19,7 +19,7 @@ app.use("/", routes);
     console.log("Database synced successfully, for opinions service.");
 
     app.listen(PORT, () => {
-      console.log(`Opinons service running at http://localhost:${PORT}`);
+      console.log(`Opinions service running at http://localhost:${PORT}`);
     });
   } catch (error) {
     console.error("Failed to sync database:", error);

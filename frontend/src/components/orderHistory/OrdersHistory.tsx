@@ -1,56 +1,43 @@
 import { Divider } from "@mui/material";
-import OrdersCustomer from "./interfaces/OrdersCustomer";
 import OrdersHistoryList from "./OrdersHistoryList";
+import authAPI from "../../helpers/authAPI";
+import { useEffect, useState } from "react";
+import OrderDto from "./interfaces/OrderDto";
+import userAuthenticated from "../../helpers/userAuthenticated";
+import getCustomerInfo from "../../helpers/getCustomerInfo";
 
-const orderHistory: OrdersCustomer = {
-    customerId: 1,
-    orders: [
-        {
-            orderId: 101,
-            orderDate: "2023-12-01",
-            ordersDetails: [
-                {
-                    productId: 1,
-                    quantity: 2,
-                    price: 50,
-                },
-                {
-                    productId: 2,
-                    quantity: 1,
-                    price: 100,
-                },
-            ],
-            totalPrice: 200,
-            shipment: 10,
-        },
-        {
-            orderId: 102,
-            orderDate: "2024-01-15",
-            ordersDetails: [
-                {
-                    productId: 3,
-                    quantity: 3,
-                    price: 30,
-                },
-                {
-                    productId: 4,
-                    quantity: 2,
-                    price: 40,
-                },
-            ],
-            totalPrice: 210,
-            shipment: 15,
-        },
-    ],
-};
-export default function OrderHistory(){
-    return <div className = "m-2 flex flex-col gap-2">
-        <div className="font-4xl">Your order history</div>
-        <Divider/>
-        <div>
-            {orderHistory?(
-                <OrdersHistoryList orders={orderHistory}/>
-            ):<div className="font-2xl">No orders have been made yet by you</div>}
-        </div>
+export default function OrderHistory() {
+  const [orderHistory, setOrderHistory] = useState<OrderDto[]>([]);
+  useEffect(() => {
+    const fetchCustomerOrders = async ()=>{
+        const customer = getCustomerInfo()
+        try {
+            if(!userAuthenticated()){
+                console.error("User is not logged in");
+                return
+            }
+            const res = await authAPI.get("http://localhost:3002/orders/customer");
+            console.log(res.data.result)
+            if (res && res.data.result) {
+              return setOrderHistory(res.data.result);
+            }
+          } catch (error) {
+            console.error(`Error in fetching order history for customer: ${customer?customer.email:'--'}:`, error);
+          }
+    }
+    fetchCustomerOrders()
+  }, []);
+  return (
+    <div className="m-2 flex flex-col gap-2">
+      <div className="font-4xl">Your order history</div>
+      <Divider />
+      <div>
+        {orderHistory && orderHistory.length>0 ? (
+          <OrdersHistoryList orders={orderHistory} />
+        ) : (
+          <div className="font-2xl">No orders have been made yet by you</div>
+        )}
+      </div>
     </div>
+  );
 }

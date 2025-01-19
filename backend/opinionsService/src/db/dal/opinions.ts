@@ -26,12 +26,12 @@ export const getById = async (id: number) => {
     throw Error(`Opinion with id ${id} not found`)
   return opinion;
 };
-export const addOpinion = async (reqDto:OpinionDto) => {
+export const addOpinion = async (reqDto:OpinionDto,customerId:number) =>{
   const opinion = await Opinion.create({
-    customer_id: reqDto.customerId,
+    customer_id: customerId,
     content: reqDto.content,
     stars: reqDto.stars,
-    product_id: reqDto.pruductId,
+    product_id: reqDto.productId,
   });
   return opinion;
 };
@@ -41,9 +41,15 @@ export const updateOpinion = async (reqDto:OpinionDto) => {
   const opinion: Opinion|null =await getById(reqDto.opinionId)
   if(!opinion)
     throw Error(`Opinion with id ${reqDto.opinionId} not found`)
-  Opinion.update(opinion,{where:{
-    content:reqDto.content
-  }});
+  await Opinion.update({
+    stars: reqDto.stars,
+    content: reqDto.content,
+  },
+  {
+    where: {
+      opinion_id: reqDto.opinionId, // Specify the condition to find the opinion
+    },
+  });
   return opinion;
 };
 export const deleteOpinion = async (id:number) => {

@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom";
 import authAPI from "../../helpers/authAPI";
 import ProductDto from "./dto/ProductDto";
 import OpinionList from "./opinions/OpinionList";
-import { Box, Button, Divider, Paper, TextField } from "@mui/material";
+import { Alert, Box, Button, Divider, Paper, TextField } from "@mui/material";
 import AddOpinionCard from "./opinions/AddOpinionCard";
-import NumberInputWithControls from "../NumberInputWithControls";
+import CheckIcon from "@mui/icons-material/Check";
+
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductDto>();
   const [orderValue,setOrderValue] = useState<number>(1)
   useEffect(() => {
     authAPI.get(`http://localhost:3001/products/${id}`).then((res) => {
-      console.log(res.data);
       if (res && res.data.result) setProduct(res.data.result);
     });
   }, [id]);
@@ -23,10 +23,10 @@ export default function ProductDetails() {
           cartValue+= Number(localStorage.getItem(`cart-item-${product?.productId}`))
         }
         if(product && cartValue>product?.availableQuantity){
-          alert(`You add to many products to card`)
+          <Alert variant="outlined" icon={<CheckIcon fontSize="inherit" />} severity="success">`You add to many products to card`)</Alert>
           return
         }
-        alert(`Added to cart ${orderValue} items of ${product?.name}`)
+        <Alert variant="outlined"  severity="error">`Added to cart ${orderValue} items of ${product?.name}`</Alert>
         localStorage.setItem(`cart-item-${product?.productId}`,cartValue.toString())
         setOrderValue(1)
       }

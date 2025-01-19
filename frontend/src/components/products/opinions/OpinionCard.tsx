@@ -56,10 +56,6 @@ export default function OpinionCard({ opinion }: { opinion: OpinionDto }) {
           {opinion.content}
         </Typography>
       </CardContent>
-      {/* <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
     </Card>
   );
 }

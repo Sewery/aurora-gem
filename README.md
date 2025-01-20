@@ -17,6 +17,9 @@ To run this project, ensure the following are installed:
 - **npm**
 - **Windows** (required as the operating system)
 
+## Api documentation
+Postman link to collection: [workspace](https://www.postman.com/sewery/workspace/aurora-gem-api/collection/13527752-92800fc8-df35-42fd-835e-3f00a10d3401?action=share&creator=13527752)
+
 ## Setup Instructions
 1. Open a terminal and navigate to the project directory.
 2. Execute the following commands:

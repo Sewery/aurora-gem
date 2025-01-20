@@ -8,6 +8,8 @@ The primary technologies used in this project are:
 - **Express**
 - **TypeScript (TS)**
 - **Material UI**
+- **Tailwind**
+- **Formik**
 
 ## Prerequisites
 To run this project, ensure the following are installed:

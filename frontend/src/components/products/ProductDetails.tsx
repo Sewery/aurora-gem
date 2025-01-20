@@ -88,7 +88,7 @@ export default function ProductDetails() {
                 {product?.price} zł
               </div>
               <div className="flex flex-col gap-2 items-center">
-                <Button variant="outlined" className="w-fit" onClick={()=>handleOnAddToCart()}>Add to cart</Button>
+                <Button variant="outlined" className="w-fit" onClick={handleOnAddToCart}>Add to cart</Button>
                 <TextField
                         type="number"
                         slotProps={{

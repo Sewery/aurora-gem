@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import TopBar from "./topbar/TopBar";
-import userAuthenticated from "../helpers/userAuthenticated";
 import { Divider } from "@mui/material";
 
 const MainLayout = () => {

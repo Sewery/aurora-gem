@@ -1,10 +1,10 @@
-import Categories from "./Categories";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import { Badge, IconButton, InputBase, Paper } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import UserMenu from "../user/UserMenu";
-import { Badge, IconButton, InputBase, Paper, TextField } from "@mui/material";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import SearchIcon from "@mui/icons-material/Search";
-import { useEffect, useState, } from "react";
+import Categories from "./Categories";
 const TopBar = () => {
   const navigate: NavigateFunction = useNavigate();
   const [countCart, setCountCart] = useState<number>(0);
@@ -23,35 +23,35 @@ const TopBar = () => {
     };
     fetchCartItemsCount();
   });
-  const handleSearch = (value:String) => {
+  const handleSearch = (value: String) => {
     navigate(`/search/${value}`, { replace: false });
   };
-
 
   return (
     <div className="flex flex-col items-center space-y-4 p-4 ">
       <div className="w-full flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto">
         <div className="flex items-center w-full md:w-auto mb-4 md:mb-0">
-          <Paper
-            component="form"
-            className=" flex items-center w-full md:w-64"
-          >
+          <Paper component="form" className=" flex items-center w-full md:w-64">
             <InputBase
               sx={{ ml: 1, flex: 1 }}
               placeholder="Search Jewelry"
               inputProps={{ "aria-label": "search jewelry" }}
               onChange={(e) => setSearch(e.target.value)}
-              
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleSearch(search);
-                
                 }
-              
               }}
             />
-            <IconButton type="button" aria-label="search" className="p-2" onClick={()=>{handleSearch(search)}}>
-              <SearchIcon  />
+            <IconButton
+              type="button"
+              aria-label="search"
+              className="p-2"
+              onClick={() => {
+                handleSearch(search);
+              }}
+            >
+              <SearchIcon />
             </IconButton>
           </Paper>
         </div>
@@ -69,8 +69,8 @@ const TopBar = () => {
 
         {/* Cart and User Menu */}
         <div className="flex items-center space-x-6 md:space-x-8 md:w-64 justify-end">
-          <Link to={`/cart/`} className="no-underline text-gray-800">
-            <Badge badgeContent={countCart} color="primary">
+          <Link to={`/cart/`} className="no-underline text-gray-800 ">
+            <Badge badgeContent={countCart} color="primary" className="cursor-pointer">
               <ShoppingBagIcon className="text-3xl" />
             </Badge>
           </Link>

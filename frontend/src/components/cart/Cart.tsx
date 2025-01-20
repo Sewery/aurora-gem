@@ -6,6 +6,7 @@ import OrderedProduct from "./interfaces/OrderedProduct";
 import { Alert, Button } from "@mui/material";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import CheckIcon from "@mui/icons-material/Check";
+import userAuthenticated from "../../helpers/userAuthenticated";
 
 interface OrderedProductsReq {
   productId: number;
@@ -57,6 +58,13 @@ interface AlertInfo {
   showError: boolean;
   message: string;
 }
+const emptyCart = () => {
+  const cartKeys = Object.keys(localStorage).filter((key) =>
+    key.startsWith("cart-item-")
+  );
+  cartKeys.forEach((key) => localStorage.removeItem(key));
+};
+
 export default function Cart() {
   const [selectedProducts, setSelectedProducts] = useState<OrderedProduct[]>();
   const [totalPrice, setTotalPrice] = useState<number>();
@@ -65,7 +73,7 @@ export default function Cart() {
     showSuccess: false,
     showInfo: false,
     showError: false,
-    message:""
+    message: "",
   });
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -94,14 +102,16 @@ export default function Cart() {
   }, [selectedProducts]);
 
   async function handleOnClickMakeOrder() {
-    const emptyCart = () => {
-      const cartKeys = Object.keys(localStorage).filter((key) =>
-        key.startsWith("cart-item-")
-      );
-      cartKeys.forEach((key) => localStorage.removeItem(key));
-    };
     try {
-      if (selectedProducts) {
+      if(!userAuthenticated){
+        setShowAlert({
+          showSuccess: false,
+          showInfo: false,
+          showError: true,
+          message: "Failed to make the order. You need to be logged in.",
+        });
+      }
+      else if (selectedProducts) {
         const req: OrderedProductsReq[] = selectedProducts.map((p) => ({
           productId: p.productId,
           quantity: p.quantity,

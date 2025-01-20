@@ -42,6 +42,7 @@ export default function EditOpinionCard(props:EditProps) {
             <OutlinedInput
               id="component-outlined"
               label="Opinion"
+              defaultValue={content}
               multiline
               rows={4}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,10 +65,9 @@ export default function EditOpinionCard(props:EditProps) {
             variant="outlined"
             onClick={() => props.onClose()}
           >
-            Don't edit
+            Abort edit
           </Button>
         </Paper>
-      )
     </>
   );
 }

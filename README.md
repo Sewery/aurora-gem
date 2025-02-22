@@ -1,21 +1,13 @@
-# Aurora Gem - Full Stack Web App
+# Aurora Gem 
+## About
+Aurora Gem is a full-stack jewelry e-commerce app built with React.js and Express.js, offering  product search, filtering, cart and order history management. It features customer reviews, ratings, and **JWT** authentication for a personalized shopping experience. Designed with a **microservices architecture**, it ensures scalability, security, and smooth performance. Application stores pictures in S3 bucket and other data in MySQL local storage using Docker.
+![App presentation](docs/aurora-gem-clip.gif "App presentation")
 
-This repository was created for laboratory classes Introduction to Web Applications at AGH UST.
-
-## Api documentation
-Postman link to backend api collection: [workspace](https://www.postman.com/sewery/workspace/aurora-gem-api/collection/13527752-92800fc8-df35-42fd-835e-3f00a10d3401?action=share&creator=13527752)
-
-## Screenshots
-### Main page
-![Screenshot showing Main page](docs/main-page.png "Screenshot showing Main page")
-### Login and sign in
+## Login and sign in
 ![Screenshot showing Login page](docs/login.png "Screenshot showing Login page")
 ![Screenshot showing Sign in page](docs/sign-in.png "Screenshot showing Sign in page")
-JWT bearer token is used for authorization and is stored in the database for a certain period of time.
-
+JWT is used for authorization and is stored in the database for a certain period of time.
 Passwords are stored in database encrypted using bcrypt
-### Product tab
-![Screenshot showing Bracelet tab page](docs/bracelet-tab.png "Screenshot showing Bracelet tab page")
 ### Product details
 ![Screenshot showing Product details page](docs/product-details.png "Screenshot showing Product details page")
 A logged-in user can add, edit, and delete their own opinions under each product. The admin can delete all opinions.
@@ -29,22 +21,17 @@ For logged-in user shows order history with total price.
 The primary technologies used in this project are:
 - **React** 
 - **Express**
-- **TypeScript (TS)**
+- **TypeScript**
 - **Material UI**
-- **Tailwind**
+- **TailwindCSS**
 - **Formik**
 - **Docker**
-
-## Prerequisites
+- **MySQL**
+## Setup Instructions
 To run this project, ensure the following are installed:
 - **Docker**
 - **npm**
-- **Windows** (required as the operating system)
-
-## Api documentation
-Postman link to collection: [workspace](https://www.postman.com/sewery/workspace/aurora-gem-api/collection/13527752-92800fc8-df35-42fd-835e-3f00a10d3401?action=share&creator=13527752)
-
-## Setup Instructions
+Now follow instructions:
 1. Open a terminal and navigate to the project directory.
 2. Execute the following commands:
 
@@ -57,6 +44,7 @@ cd ..
 
 npm run dev
 ```
+Page will be displayed [here](http://localhost:5173/)
 ## Contributors
 - **Seweryn Tasior** ([GitHub Profile](https://github.com/Sewery))
 - **Wojtek Pawlina** ([GitHub Profile](https://github.com/Wpawlina))

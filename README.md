@@ -1,6 +1,7 @@
 # Aurora Gem 
 ## About
-Aurora Gem is a full-stack jewelry e-commerce app built with React.js and Express.js, offering  product search, filtering, cart and order history management. It features customer reviews, ratings, and **JWT** authentication for a personalized shopping experience. Designed with a **microservices architecture**, it ensures scalability, security, and smooth performance. Application stores pictures in S3 bucket and other data in MySQL local storage using Docker.
+**Aurora Gem** is a full-stack jewelry e-commerce app built with **React.js** and **Express.js** in **TS**, offering  product search, filtering, cart and order history management. It features customer reviews, ratings, and **JWT** authentication for a personalized shopping experience. Designed with a **microservices architecture**, it ensures scalability, security, and smooth performance. Application stores pictures in S3 bucket and other data in MySQL local storage using Docker.
+<br /><br />
 ![App presentation](docs/aurora-gem-clip.gif "App presentation")
 
 ## Login and sign in

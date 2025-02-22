@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import authAPI from "../../helpers/authAPI";
-import ProductDto from "../products/dto/ProductDto";
+import ProductDto from "../products/interfaces/ProductDto";
 import { NavigateFunction ,useNavigate} from "react-router-dom";
 
 

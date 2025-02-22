@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import authAPI from "../../helpers/authAPI";
-import ProductDto from "./dto/ProductDto";
+import ProductDto from "./interfaces/ProductDto";
 import OpinionList from "./opinions/OpinionList";
 import { Alert, Box, Button, Divider, Paper, TextField } from "@mui/material";
 import AddOpinionCard from "./opinions/AddOpinionCard";

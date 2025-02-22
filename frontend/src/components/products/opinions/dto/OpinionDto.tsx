@@ -3,14 +3,16 @@ export interface OpinionDto {
     customerName:string|null
     content: string;
     stars: number,
-    productId: number
+    productId: number,
+    customerId?:number
   }
 
 export function mapToOpinionDto(
     opinionId:number|null,
     stars: number,
     content: string,
-    productId: number
+    productId: number,
+    customerId?:number
   ): OpinionDto {
     return {
       opinionId: opinionId,
@@ -18,6 +20,7 @@ export function mapToOpinionDto(
       content: content,
       stars: stars,
       productId: productId,
+      customerId: customerId ?? undefined
     };
   }
   

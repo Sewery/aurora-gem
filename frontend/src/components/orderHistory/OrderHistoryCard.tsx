@@ -4,7 +4,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import authAPI from "../../helpers/authAPI";
 import OrderDetailsDto from "./interfaces/OrderDetailsDto";
 import { useEffect, useState } from "react";
-import ProductDto from "../products/dto/ProductDto";
+import ProductDto from "../products/interfaces/ProductDto";
 
 interface OrderedProduct {
   productId: number;

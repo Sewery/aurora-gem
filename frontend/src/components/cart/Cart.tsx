@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CartOrdersList from "./CartOrdersList";
 import authAPI from "../../helpers/authAPI";
-import ProductDto from "../products/dto/ProductDto";
+import ProductDto from "../products/interfaces/ProductDto";
 import OrderedProduct from "./interfaces/OrderedProduct";
 import { Alert, Button } from "@mui/material";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";

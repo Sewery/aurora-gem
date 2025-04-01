@@ -45,7 +45,7 @@ cd ..
 
 npm run dev
 ```
-Page will be displayed [here](http://localhost:5173/)
+Website will be displayed [here](http://localhost:5173/)
 ## Contributors
 - **Seweryn Tasior** ([GitHub Profile](https://github.com/Sewery))
 - **Wojtek Pawlina** ([GitHub Profile](https://github.com/Wpawlina))
